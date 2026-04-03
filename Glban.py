@@ -4,7 +4,6 @@ import typing
 
 from asyncio import sleep as asleep
 
-from telethon import functions
 from telethon.tl.types import Message, User
 from .. import loader, utils
 
@@ -37,8 +36,6 @@ class GlobalRestrict(loader.Module):
         "glban": '<b><a href="{}">{}</a></b>\n<b></b><i>{}</i>\n\n{}',
         "glbanning": " <b>Запрос к TgIP <a href=\"{}\">{}</a>...</b>",
         "in_n_chats": "<b>Кол-во {} </b>",
-        "user_deleted": "<b>Уже снесено.</b>",
-        "user_not_found": "<b>Уже снесено.</b>",
     }
 
     def __init__(self):
@@ -150,14 +147,6 @@ class GlobalRestrict(loader.Module):
 
         user, t, reason, silent = a
 
-        if getattr(user, 'deleted', False):
-            await utils.answer(message, self.strings("user_deleted"))
-            return
-
-        if getattr(user, 'first_name', None) is None:
-            await utils.answer(message, self.strings("user_not_found"))
-            return
-
         msg = await utils.answer(
             message,
             self.strings("glbanning").format(
@@ -193,7 +182,7 @@ class GlobalRestrict(loader.Module):
                 if match:
                     wait_time = match.group(1)
                     await error_msg.delete()
-                    await self.invoke("suspend", wait_time, -1003210807070)
+                    await self.invoke("suspend", wait_time, -1003386682154)
                 continue
             else:
                 counter += 1
